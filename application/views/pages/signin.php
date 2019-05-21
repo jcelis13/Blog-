@@ -4,7 +4,7 @@
 <form class="form-signin" method="post" action="<?php echo site_url('user/login');?>">
   <center>
 
-  <img class="mb-4" src="<?php echo base_url('images/signup.png');?>" alt="" width="145" height="145">
+  <img class="mb-4" src="<?php echo base_url('images/signup.png');?>" width="145" height="145">
     
           <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
@@ -15,8 +15,12 @@
          </div>
 
       </div>
-        <input type="text" id="inputEmail" name="username" class="form-control" placeholder="username" autofocus="" style="height: 48px;">
+     
+        <input type="text" name="username" class="form-control" placeholder="username" value="<?php echo set_value('username');?>" autofocus="" style="height: 48px;">
+      
+     
     </div>
+      <label style="color: red"><?php echo form_error('username'); ?></label>
    
  
   <div class="input-group">
@@ -25,8 +29,12 @@
              <span class="input-group-addon"><img src="<?php echo base_url('images/password.png');?>" style="width: 20px; height: 20px"></span>
          </div>
       </div>
-         <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password">
+         <input type="password" name="password" class="form-control" placeholder="password" value="<?php echo set_value('password');?>">
+        
+        
     </div>
+     <label style="color: red"><?php echo form_error('password'); ?></label>
+     
  
  
  
@@ -35,6 +43,11 @@
     </label>
   
   <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  <?php
+  echo '<label class="text-danger">'.$this->session->flashdata("error");
+
+  ?>
+
   <p class="mt-5 mb-3 text-muted">© 2017-2019</p>
 </form>
 </center>

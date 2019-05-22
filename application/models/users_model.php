@@ -21,6 +21,16 @@ public function login($username, $password){
 			return false;
 		}
 
+
+}
+public function insertblog($data){
+	$this->db->insert('blogpost', $data);
+
+	 
+}
+public function get_blogpost(){
+	$query = $this->db->get('blogpost');
+	return $result = $query->result();
 }
 
 }

@@ -1,21 +1,26 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class User extends CI_Controller {
-    public $holder = array();
+
 	function __construct() {
 parent::__construct();
 $this->load->database();
 $this->load->model('users_model');
 $this->load->library('session');
    $this->load->library('form_validation');
-
-// $this->load->library('encrypt');
+$this->load->model('users_model', 'blog');
+ // $this->load->library('encrypt');
 }
     public function index() 
     {
+        $result = $this->blog->get_blogpost();
+        if(!empty($result)){
+            $data['blogdata'] = $result;
+             $this->load->view('pages/main');
+        }
 
         $this->load->view('layout/header');
-        $this->load->view('pages/index');
+        $this->load->view('pages/main');
         $this->load->view('layout/footer');
     }
     public function registration(){
@@ -82,7 +87,7 @@ $this->load->library('session');
 
         );
         $this->session->set_userdata($sess_data);
-            var_dump($this->session->set_userdata($sess_data)); 
+           
             redirect(base_url() . 'index.php/user/main');
         }
         else{
@@ -104,7 +109,8 @@ $this->load->library('session');
         $this->load->view('layout/footer');
     }
     public function main(){
-           
+        
+        
         $this->load->view('pages/main');
        
         }
@@ -112,6 +118,29 @@ $this->load->library('session');
       $this->session->sess_destroy();
           redirect(base_url(). 'index.php/user/main');
     }
+    public function insert_blog(){
+        $this->form_validation->set_rules('blogtitle', 'Blog Title', 'required');
+        $this->form_validation->set_rules('caption', 'Caption', 'required');
+
+        if($this->form_validation->run() === FALSE){
+           
+                $this->load->view('pages/main');
+               
+        }else{
+             $data['usersid'] = $this->session->userdata('id');
+            $data['usersname'] = $this->session->userdata('firstname') . " ". $this->session->userdata('lastname');
+            $data['title'] = $this->input->post('blogtitle');
+            $data['caption'] =  $this->input->post('caption');
+            $data['time'] = date("h:i:sa");
+            $data['date'] = date("Y-M-d");
+           
+            $this->users_model->insertblog($data);
+
+                
+        }
+
+    }
+    
 
     }
 

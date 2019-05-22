@@ -70,12 +70,10 @@
     </nav>
   
     <header id="first">
-<div>	
-		<?php
-			if(!empty($this->session->userdata('id'))){
-				?>
+
 				<br><br>
 					<center><h2>BLOG</h2></center>
+			<form method="post" action="<?php echo site_url('user/insert_blog');?>">
 					<div class="form-row" style="margin-left: 500px;">
 
 					
@@ -90,19 +88,15 @@
 						<label style="color: red"><?php echo form_error('caption'); ?></label>
 						<textarea style="height: 200px;" class="form-control" placeholder="write your caption here......" name="caption" size="20" value="<?php echo set_value('caption');?>"   ></textarea>
 						<br>
-						<input type="file" name="userfile" size="20" />
-						<br>
-						<button type="button" class="btn btn-success" style="margin-right: 400px;border-radius: 2px;">Submit</button>
+						
+						<button type="submit" name="submit" value="Send" class="btn btn-success" style="margin-right: 400px;border-radius: 2px;">Submit</button>
+
 					
 		
 				</div>
-			</div>			
-				<?php
-			}
-		?>
-
-</div>                    
-                
+			</div>	
+		</form>		
+		
                      
 
             
@@ -112,7 +106,8 @@
     		<center><h1>POST SECTION</h1></center>
     		
     		 <div class="row">
-    		 
+    		 	
+    		
 					  <div class="col-lg-4">
 					    <div class="thumbnail">
 					    	<p style="color: black">Name: Jann Martie</p>
@@ -156,9 +151,10 @@
 					      </div>
 					    </div>
 					  </div>
+					 
 			</div>
-
-
+			
+   
     </section>
 
     <section id="three" class="no-padding">

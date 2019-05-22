@@ -9,5 +9,6 @@ class Dashboard extends CI_Controller {
         $this->load->view('pages/dashboard/index');
         $this->load->view('layout/footer');
     }
+ 
 
 }

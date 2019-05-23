@@ -107,7 +107,8 @@
     		
     <?php 
                 foreach($data as $row){
-              
+            
+             
              ?>
     		 <div class="row">
     		 	
@@ -116,21 +117,17 @@
 					    
 					  </div>
 					
-			
-    		      <?php $holder = $row->picname;
-
-                    echo $holder;
-                  ?>
+		 	    <?php echo $row->picname; ?>
 					  <div class="col-lg-4">
 					    <div class="thumbnail">
 					    	<p style="color: black">Name: <?php echo $row->usersname;?></p>
-					      <img src="<?php echo base_url('assets/deer.jpg');?>">
+					      <img src="<?php echo base_url('uploads/'.$row->picname);?>">
 					      <div class="caption">
 					        <h3>TITLE: <?php echo $row->title;?> </h3>
 					        <p>Caption:  <?php echo $row->caption;?></p>
-					        <small>Date:  <?php echo $row->date;?></small>
-					        <small>Time:  <?php echo $row->time;?></small>
-					    
+					        <small>Date:  <?php echo $row->date;?></small><br>
+                            <small>Date:  <?php echo $row->time;?></small>
+				  
 					      </div>
 					    </div>
 					  </div>

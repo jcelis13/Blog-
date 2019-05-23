@@ -73,7 +73,7 @@
 
 				<br><br>
 					<center><h2>BLOG</h2></center>
-			<form method="post" action="<?php echo site_url('user/insert_blog');?>">
+			<form method="post" action="<?php echo site_url('user/insert_blog');?>" enctype="multipart/form-data">
 					<div class="form-row" style="margin-left: 500px;">
 
 					
@@ -88,7 +88,8 @@
 						<label style="color: red"><?php echo form_error('caption'); ?></label>
 						<textarea style="height: 200px;" class="form-control" placeholder="write your caption here......" name="caption" size="20" value="<?php echo set_value('caption');?>"   ></textarea>
 						<br>
-						
+						<input type="file" name="userFile">   
+                        <br>
 						<button type="submit" name="submit" value="Send" class="btn btn-success" style="margin-right: 400px;border-radius: 2px;">Submit</button>
 
 					
@@ -101,59 +102,46 @@
 
             
     </header>
-
+<center><h1>POST SECTION</h1></center>
     <section class="bg-primary" id="one">
-    		<center><h1>POST SECTION</h1></center>
     		
+    <?php 
+                foreach($data as $row){
+              
+             ?>
     		 <div class="row">
     		 	
     		
 					  <div class="col-lg-4">
-					    <div class="thumbnail">
-					    	<p style="color: black">Name: Jann Martie</p>
-					      <img src="<?php echo base_url('assets/city.jpg');?>">
-					      <div class="caption">
-					        <h3>TITLE</h3>
-					        <p> Open node_modules folder and under that. Search and open bootstrap folder. Now you'll be able to see version number in the following files. package.json. scss/bootstrap.scss or css/bootstrap.css. README.md. and there are other files too.</p>
-
-					        <h4>May 22, 2019</h4>
-					        <small>1:43pm</small>
 					    
-					      </div>
-					    </div>
 					  </div>
 					
 			
-    		
+    		      <?php $holder = $row->picname;
+
+                    echo $holder;
+                  ?>
 					  <div class="col-lg-4">
 					    <div class="thumbnail">
-					    	<p style="color: black">Name: Jann Martie</p>
-					      <img src="<?php echo base_url('assets/city.jpg');?>">
+					    	<p style="color: black">Name: <?php echo $row->usersname;?></p>
+					      <img src="<?php echo base_url('assets/deer.jpg');?>">
 					      <div class="caption">
-					        <h3>TITLE</h3>
-					        <p> Open node_modules folder and under that. Search and open bootstrap folder. Now you'll be able to see version number in the following files. package.json. scss/bootstrap.scss or css/bootstrap.css. README.md. and there are other files too.</p>
-					        <h4>May 22, 2019</h4>
-					        <small>1:43pm</small>
+					        <h3>TITLE: <?php echo $row->title;?> </h3>
+					        <p>Caption:  <?php echo $row->caption;?></p>
+					        <small>Date:  <?php echo $row->date;?></small>
+					        <small>Time:  <?php echo $row->time;?></small>
 					    
 					      </div>
 					    </div>
 					  </div>
+        
+             
 					  <div class="col-lg-4">
-					    <div class="thumbnail">
-					    	<p style="color: black">Name: Jann Martie</p>
-					      <img src="<?php echo base_url('assets/city.jpg');?>">
-					      <div class="caption">
-					        <h3>TITLE</h3>
-					        <p> Open node_modules folder and under that. Search and open bootstrap folder. Now you'll be able to see version number in the following files. package.json. scss/bootstrap.scss or css/bootstrap.css. README.md. and there are other files too.</p>
-					        <h4>May 22, 2019</h4>
-					        <small>1:43pm</small>
-					    
-					      </div>
-					    </div>
+					  
 					  </div>
 					 
 			</div>
-			
+		  <?php }?>	
    
     </section>
 

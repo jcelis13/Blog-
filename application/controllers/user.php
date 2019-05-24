@@ -101,7 +101,7 @@ class User extends CI_Controller {
     }
     public function logout()
     {   
-      
+        
         $this->load->view('layout/header');
         $this->load->view('pages/signin');
         $this->load->view('layout/footer');

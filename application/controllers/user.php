@@ -16,37 +16,62 @@ class User extends CI_Controller {
         public function index() 
         {
 
-            $this->load->view('layout/header');
-            $this->load->view('pages/main');
-            $this->load->view('layout/footer');
+
+            $data['data'] = $this->users_model->getUsers();
+            $this->load->view('pages/index', $data);
+          
         }
-        public function registration()
-        {       
+        public function insert_users()
+        {
+              $this->load->view('pages/add');
+          
+        }
+        public function submit()
+        {
 
-    	        $this->form_validation->set_rules('firstname', 'firstName', 'required');
-            	$this->form_validation->set_rules('lastname', 'lastName', 'required');
-            	$this->form_validation->set_rules('username', 'userName', 'required|is_unique[users.username]');
-            	$this->form_validation->set_rules('password', 'passWord', 'required|matches[confirmpassword]');
-            	$this->form_validation->set_rules('confirmpassword', 'confirmpassword', 'required');
+                $this->form_validation->set_rules('firstname', 'firstName', 'required');
+                $this->form_validation->set_rules('lastname', 'lastName', 'required');
+                 $this->form_validation->set_rules('status', 'Status', 'required');
+                $this->form_validation->set_rules('username', 'userName', 'required|is_unique[users.username]');
+                $this->form_validation->set_rules('password', 'passWord', 'required|matches[confirmpassword]');
 
-            	if($this->form_validation->run() == FALSE){
-            			$this->load->view('layout/header');
-        		        $this->load->view('pages/registration');
-        		        $this->load->view('layout/footer');
-            	}else{
-            	$data['firstname'] = $this->input->post('firstname');
-            	$data['lastname'] = $this->input->post('lastname');
-            	$data['username'] = $this->input->post('username');
-            	$data['password'] = $this->input->post('password');
-            
-                $this->users_model->insert($data);
-                $this->load->view('layout/header');
-                $this->load->view('pages/registration');
-                $this->load->view('layout/footer');
-            	
-        	
+                if($this->form_validation->run()==FALSE){
+                     $this->load->view('pages/add');
                 }
+                else{
+                     $result = $this->users_model->submit();
+                    if($result){
+                        $this->session->set_flashdata('success_msg', 'Record added successfully');
+                    }else{                
+                        $this->session->set_flashdata('error_msg', 'Failed to add record');
+                    }
+                    redirect(site_url('user/index'));
+                }
+           
         }
+        public function edit($id){
+            $data['data'] = $this->users_model->getUsersById($id);
+            $this->load->view('pages/edit', $data);
+        }
+        public function update(){
+           $result = $this->users_model->update();
+            if($result){
+                $this->session->set_flashdata('success_msg', 'Record updated successfully');
+            }else{
+                $this->session->set_flashdata('error_msg', 'Failed to update record');
+            }
+            redirect(site_url('user/index'));
+        }
+        public function delete($id){
+           $result = $this->users_model->deleteuser($id);
+            if($result){
+                $this->session->set_flashdata('success_msg', 'Record deleted successfully');
+            }else{
+                $this->session->set_flashdata('error_msg', 'Failed to delete record');
+            }
+            redirect(site_url('user/index'));
+        }
+      
     //blog/index.php/user/edit_user
     public function login()
     {
@@ -55,7 +80,12 @@ class User extends CI_Controller {
             if($this->form_validation->run()){
                 //true
             $username = $this->input->post('username');
-            $password = $this->input->post('password');
+
+           
+            $password = $this->encrypt->sha1($this->input->post('password'));
+
+           
+
             $this->load->model('users_model');
 
                 if($this->users_model->login($username, $password)){
@@ -67,15 +97,20 @@ class User extends CI_Controller {
                         'id' => $row->id,
                         'firstname' => $row->firstname,
                         'lastname' => $row->lastname,
-                        'username' => $username
+
+                        'username' =>$row->status,
+
+                        
 
                     );
                     $this->session->set_userdata($sess_data);
                     redirect(base_url() . 'index.php/user/main');
+
                 }
                 else{
                         $this->session->set_flashdata('error', 'Invalid Username or Password');
                         redirect(base_url(). 'index.php/user/signin');
+
                 }
             }
             else{
@@ -101,7 +136,7 @@ class User extends CI_Controller {
     }
     public function logout()
     {   
-      
+        $this->session->sess_destroy();
         $this->load->view('layout/header');
         $this->load->view('pages/signin');
         $this->load->view('layout/footer');

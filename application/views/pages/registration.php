@@ -1,5 +1,5 @@
 <br><div class="container">
-		<form method="post" action="<?php echo site_url('user/registration');?>">
+		<form method="post" action="<?php site_url('user/registration');?>">
 				<center><h2>REGISTRATION</h2></center>
 				<br>
 			
@@ -41,7 +41,7 @@
 			  	</div>
 			  
 			  	<button type="submit" name="submit" value="Send" class="btn btn-success">Success</button>
-
+			  		
 		</form>
 	
 

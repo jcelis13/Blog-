@@ -16,6 +16,7 @@ class User extends CI_Controller {
         public function index() 
         {
 
+
             $data['data'] = $this->users_model->getUsers();
             $this->load->view('pages/index', $data);
           
@@ -70,33 +71,7 @@ class User extends CI_Controller {
             }
             redirect(site_url('user/index'));
         }
-       /* public function registration()
-        {       
-
-    	        $this->form_validation->set_rules('firstname', 'firstName', 'required');
-            	$this->form_validation->set_rules('lastname', 'lastName', 'required');
-            	$this->form_validation->set_rules('username', 'userName', 'required|is_unique[users.username]');
-            	$this->form_validation->set_rules('password', 'passWord', 'required|matches[confirmpassword]');
-            	$this->form_validation->set_rules('confirmpassword', 'confirmpassword', 'required');
-
-            	if($this->form_validation->run() == FALSE){
-            			$this->load->view('layout/header');
-        		        $this->load->view('pages/registration');
-        		        $this->load->view('layout/footer');
-            	}else{
-            	$data['firstname'] = $this->input->post('firstname');
-            	$data['lastname'] = $this->input->post('lastname');
-            	$data['username'] = $this->input->post('username');
-            	$data['password'] = $this->input->post('password');
-            
-                $this->users_model->insert($data);
-                $this->load->view('layout/header');
-                $this->load->view('pages/registration');
-                $this->load->view('layout/footer');
-            	
-        	
-                }
-        }*/
+      
     //blog/index.php/user/edit_user
     public function login()
     {
@@ -105,8 +80,12 @@ class User extends CI_Controller {
             if($this->form_validation->run()){
                 //true
             $username = $this->input->post('username');
+
            
             $password = $this->encrypt->sha1($this->input->post('password'));
+
+           
+
             $this->load->model('users_model');
 
                 if($this->users_model->login($username, $password)){
@@ -118,8 +97,10 @@ class User extends CI_Controller {
                         'id' => $row->id,
                         'firstname' => $row->firstname,
                         'lastname' => $row->lastname,
+
                         'username' =>$row->status,
-                        'username' => $username
+
+                        
 
                     );
                     $this->session->set_userdata($sess_data);
@@ -129,7 +110,6 @@ class User extends CI_Controller {
                 else{
                         $this->session->set_flashdata('error', 'Invalid Username or Password');
                         redirect(base_url(). 'index.php/user/signin');
-                        
 
                 }
             }

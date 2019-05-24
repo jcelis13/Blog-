@@ -1,117 +1,167 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class User extends CI_Controller {
-    public $holder = array();
-	function __construct() {
-parent::__construct();
-$this->load->database();
-$this->load->model('users_model');
-$this->load->library('session');
-   $this->load->library('form_validation');
 
-// $this->load->library('encrypt');
-}
-    public function index() 
+	function __construct() 
     {
-
-        $this->load->view('layout/header');
-        $this->load->view('pages/index');
-        $this->load->view('layout/footer');
-    }
-    public function registration(){
-    	
-
-    	$this->form_validation->set_rules('firstname', 'firstName', 'required');
-    	$this->form_validation->set_rules('lastname', 'lastName', 'required');
-    	$this->form_validation->set_rules('username', 'userName', 'required|is_unique[blog.username]');
-    	$this->form_validation->set_rules('password', 'passWord', 'required|matches[confirmpassword]');
-    	$this->form_validation->set_rules('confirmpassword', 'confirmpassword', 'required');
-
-    	if($this->form_validation->run() === FALSE){
-    			$this->load->view('layout/header');
-		        $this->load->view('pages/registration');
-		        $this->load->view('layout/footer');
-    	}else{
-    		$data['firstname'] = $this->input->post('firstname');
-    	$data['lastname'] = $this->input->post('lastname');
-    	$data['username'] = $this->input->post('username');
-    	$data['password'] = $this->input->post('password');
-    	$data['confirmpassword'] = $this->input->post('confirmpassword');
-
-    	if($data['password']==$data['confirmpassword']){
-			$this->users_model->insert($data);
-			$this->load->view('layout/header');
-		    $this->load->view('pages/registration');
-		    $this->load->view('layout/footer');
-
-
-    	}  
-    	else{
-    		
-    		echo '<script>alert("password did not match");</script>';
-          	/*$this->load->view('layout/header');
-	        $this->load->view('pages/registration');
-	        $this->load->view('layout/footer');*/
-
-    	}
-    }
-  }
-    //blog/index.php/user/edit_user
-    public function login(){
-     
-
-    $this->form_validation->set_rules('username', 'username', 'required');
-    $this->form_validation->set_rules('password', 'password', 'required');
-    if($this->form_validation->run()){
-        //true
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
+        parent::__construct();
+        $this->load->database();
         $this->load->model('users_model');
-
-        if($this->users_model->login($username, $password)){
-
-            $sql = "SELECT * FROM blog WHERE username = '".$username."'";
-            $result = $this->db->query($sql);
-            $row = $result->row();
-
-              $sess_data = array(
-                'id' => $row->id,
-                'firstname' => $row->firstname,
-                'lastname' => $row->lastname,
-                'username' => $username
-
-        );
-        $this->session->set_userdata($sess_data);
-            var_dump($this->session->set_userdata($sess_data)); 
-            redirect(base_url() . 'index.php/user/main');
-        }
-        else{
-            $this->session->set_flashdata('error', 'Invalid Username or Password');
-            redirect(base_url(). 'index.php/user/signin');
-        }
+        $this->load->model('blog_model');
+        $this->load->library('session');
+        $this->load->library('form_validation');
+        $this->load->library('encrypt');
+        $this->load->helper('form');
     }
-    else{
-        $this->signin();
-    }
-    
+        public function index() 
+        {
+
+            $this->load->view('layout/header');
+            $this->load->view('pages/main');
+            $this->load->view('layout/footer');
+        }
+        public function registration()
+        {       
+
+    	        $this->form_validation->set_rules('firstname', 'firstName', 'required');
+            	$this->form_validation->set_rules('lastname', 'lastName', 'required');
+            	$this->form_validation->set_rules('username', 'userName', 'required|is_unique[users.username]');
+            	$this->form_validation->set_rules('password', 'passWord', 'required|matches[confirmpassword]');
+            	$this->form_validation->set_rules('confirmpassword', 'confirmpassword', 'required');
+
+            	if($this->form_validation->run() == FALSE){
+            			$this->load->view('layout/header');
+        		        $this->load->view('pages/registration');
+        		        $this->load->view('layout/footer');
+            	}else{
+            	$data['firstname'] = $this->input->post('firstname');
+            	$data['lastname'] = $this->input->post('lastname');
+            	$data['username'] = $this->input->post('username');
+            	$data['password'] = $this->input->post('password');
+            
+                $this->users_model->insert($data);
+                $this->load->view('layout/header');
+                $this->load->view('pages/registration');
+                $this->load->view('layout/footer');
+            	
+        	
+                }
+        }
+    //blog/index.php/user/edit_user
+    public function login()
+    {
+            $this->form_validation->set_rules('username', 'username', 'required');
+            $this->form_validation->set_rules('password', 'password', 'required');
+            if($this->form_validation->run()){
+                //true
+            $username = $this->input->post('username');
+            $password = $this->input->post('password');
+            $this->load->model('users_model');
+
+                if($this->users_model->login($username, $password)){
+
+                $sql = "SELECT * FROM users WHERE username = '".$username."'";
+                $result = $this->db->query($sql);
+                $row = $result->row();
+                     $sess_data = array(
+                        'id' => $row->id,
+                        'firstname' => $row->firstname,
+                        'lastname' => $row->lastname,
+                        'username' => $username
+
+                    );
+                    $this->session->set_userdata($sess_data);
+                    redirect(base_url() . 'index.php/user/main');
+                }
+                else{
+                        $this->session->set_flashdata('error', 'Invalid Username or Password');
+                        redirect(base_url(). 'index.php/user/signin');
+                }
+            }
+            else{
+                $this->signin();
+            }
+            
 
         
     }
-    public function signin(){
+    public function signin()
+    {
 
         $this->load->view('layout/header');
         $this->load->view('pages/signin');
         $this->load->view('layout/footer');
     }
-    public function main(){
-           
-        $this->load->view('pages/main');
+    public function main()
+    {
+        $result['data'] = $this->blog_model->get_blogpost();
+        
+        $this->load->view('pages/main', $result);
        
-        }
-    public function logout(){   
-      $this->session->sess_destroy();
-          redirect(base_url(). 'index.php/user/main');
     }
+    public function logout()
+    {   
+      
+        $this->load->view('layout/header');
+        $this->load->view('pages/signin');
+        $this->load->view('layout/footer');
+    }
+    public function insert_blog()
+    {
+
+
+        $this->form_validation->set_rules('blogtitle', 'Blog Title', 'required');
+        $this->form_validation->set_rules('caption', 'Caption', 'required');
+
+        if($this->form_validation->run() === FALSE){
+           
+                $this->load->view('pages/main');
+               
+        }else{
+
+              $maxid = 0;
+            $row = $this->db->query('SELECT MAX(id) AS `maxid` FROM `blogpost`')->row();
+            if ($row) {
+                $maxid = $row->maxid; 
+            }
+           
+            $picname = $maxid+1;
+
+             $data['usersid'] = $this->session->userdata('id');
+            $data['usersname'] = $this->session->userdata('firstname') . " ". $this->session->userdata('lastname');
+            $data['title'] = $this->input->post('blogtitle');
+            $data['caption'] =  $this->input->post('caption');
+            $data['time'] = date("h:i:sa");
+            $data['date'] = date("Y-M-d");
+            $data['picname'] = $picname.".jpg";
+
+            $this->blog_model->insertblog($data);
+            $result['data'] = $this->blog_model->get_blogpost();
+            $this->load->view('pages/main', $result);
+            
+            
+
+            $config['upload_path'] ='./uploads';
+            $config['allowed_types'] ='gif|jpg|png';
+            $config['max_width'] = "1024";
+            $config['max_height'] = "786";
+             $config['file_name'] = $picname.".jpg";
+            $this->load->library('upload', $config);
+           if(!$this->upload->do_upload('userFile')){
+                $error  = array('error' =>$this->upload->display_errors());
+           } 
+           else{
+               $data=array('upload_data'=>$this->upload->data());
+               
+           }    
+         
+
+          
+                
+        }
 
     }
+  
+    
+}
 

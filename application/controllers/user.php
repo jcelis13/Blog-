@@ -97,11 +97,8 @@ class User extends CI_Controller {
                         'id' => $row->id,
                         'firstname' => $row->firstname,
                         'lastname' => $row->lastname,
-
-                        'username' =>$row->status,
-
-                        
-
+                        'status' => $row->status,
+      
                     );
                     $this->session->set_userdata($sess_data);
                     redirect(base_url() . 'index.php/user/main');

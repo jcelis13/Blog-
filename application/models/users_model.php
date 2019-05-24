@@ -6,13 +6,15 @@ class Users_model extends CI_Model{
 	function __construct() {
 	parent::__construct();
 	$this->load->database(); 
-}
+	}
 
-public function insert($data){
+public function insert($data)
+{
 	$this->db->insert(self::USERSTABLE, $data);
 	 
 }
-public function getUsers(){
+public function getUsers()
+{
 		$query = $this->db->get(self::USERSTABLE);
 		if($query->num_rows() > 0){
 			return $query->result();
@@ -20,7 +22,8 @@ public function getUsers(){
 			return false;	
 		}
 }
-public function submit(){
+public function submit()
+{
 	$encrypted_string = $this->encrypt->sha1($this->input->post('password'));
 	if($this->input->post('status')=="Admin"){
 		$statusholder = 1;
@@ -42,7 +45,8 @@ public function submit(){
 		return false;
 	}
 }
-public function getUsersById($id){
+public function getUsersById($id)
+{
 	$this->db->where('id', $id);
 	$query = $this->db->get(self::USERSTABLE);
 	if($query->num_rows() > 0){
@@ -51,7 +55,8 @@ public function getUsersById($id){
 		return false;
 	}
 }
-public function update(){
+public function update()
+{
 	$id = $this->input->post('text_hidden');
 	$field = array(
 		'firstname' =>$this->input->post('firstname'),
@@ -67,7 +72,8 @@ public function update(){
 		return false;
 	}
 }
-public function deleteuser($id){
+public function deleteuser($id)
+{
 	$this->db->where('id',$id);
 	$this->db->delete(self::USERSTABLE);
 	if($this->db->affected_rows() > 0){
@@ -76,32 +82,19 @@ public function deleteuser($id){
 		return false;
 	}
 }
-public function login($username, $password){
-
+public function login($username, $password)
+{
 		$this->db->where('username', $username);
 		$this->db->where('password', $password);
 		$query = $this->db->get(self::USERSTABLE);
 		if($query->num_rows() > 0 ){
-			return true;
+		return true;
 
-
-		public function insert($data)
-		{
-			$this->db->insert(self::USERSTABLE, $data);
+		}else{
+		return false;
 		}
-		public function login($username, $password)
-		{
-				$this->db->where('username', $username);
-				$this->db->where('password', $password);
-				$query = $this->db->get(self::USERSTABLE);
-				if($query->num_rows() > 0 ){
-					return true;
 
-				}else{
-					return false;
-				}
-
-		}
+}
 
 }
 

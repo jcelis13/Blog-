@@ -70,7 +70,9 @@
     </nav>
   
     <header id="first">
-
+        <?php if(!empty($this->session->userdata('id'))) {
+        ?>
+        
 				<br><br>
 					<center><h2>BLOG</h2></center>
 			<form method="post" action="<?php echo site_url('user/insert_blog');?>" enctype="multipart/form-data">
@@ -96,8 +98,9 @@
 		
 				</div>
 			</div>	
-		</form>		
-		
+		</form>	
+        <?php	
+		}?>
                      
 
             

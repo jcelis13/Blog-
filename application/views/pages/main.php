@@ -47,18 +47,19 @@
                       <a style="text-decoration: none; cursor: pointer; color: white" class=" dropdown-toggle" type="button" data-toggle="dropdown"><?php if(!empty($this->session->userdata('id'))){
 
                       	echo $this->session->userdata('firstname') ." ".  $this->session->userdata('lastname'); 
-                      }
+                        
+
 
                       ?>
 
 
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
+                              <li><a href="<?php echo site_url('user/logout');?>">Edit Profile</a></li>
                               <li><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
-                              <li><a class="page-scroll" data-toggle="modal" title="A free Bootstrap video landing theme"  href="#Edit">Edit Profile</a></li>
                             
                             </ul>
-
+                        <?php }?>
                     </div>
                 	</li>
                 	
@@ -72,8 +73,15 @@
     <header id="first">
 
 				<br><br>
+                  <?php
+                    if(!empty($this->session->userdata('id'))){
+
+                 
+
+                ?>
 					<center><h2>BLOG</h2></center>
 			<form method="post" action="<?php echo site_url('user/insert_blog');?>" enctype="multipart/form-data">
+              
 					<div class="form-row" style="margin-left: 500px;">
 
 					
@@ -96,6 +104,7 @@
 		
 				</div>
 			</div>	
+        <?php  }?>
 		</form>		
 		
                      
@@ -107,8 +116,8 @@
     		
     <?php 
                 foreach($data as $row){
-            
-             
+                    
+                
              ?>
     		 <div class="row">
     		 	

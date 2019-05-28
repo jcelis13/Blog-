@@ -101,7 +101,7 @@ class User extends CI_Controller {
     }
     public function logout()
     {   
-        
+        $this->session->sess_destroy();
         $this->load->view('layout/header');
         $this->load->view('pages/signin');
         $this->load->view('layout/footer');
@@ -133,6 +133,7 @@ class User extends CI_Controller {
             $data['caption'] =  $this->input->post('caption');
             $data['time'] = date("h:i:sa");
             $data['date'] = date("Y-M-d");
+            $data['poststatus'] = 1;
             $data['picname'] = $picname.".jpg";
 
             $this->blog_model->insertblog($data);

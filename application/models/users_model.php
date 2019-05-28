@@ -8,10 +8,6 @@ class Users_model extends CI_Model{
 	$this->load->database(); 
 }
 
-public function insert($data){
-	$this->db->insert(self::USERSTABLE, $data);
-	 
-}
 public function getUsers(){
 		$query = $this->db->get(self::USERSTABLE);
 		if($query->num_rows() > 0){
@@ -76,14 +72,7 @@ public function deleteuser($id){
 		return false;
 	}
 }
-public function login($username, $password){
-
-		$this->db->where('username', $username);
-		$this->db->where('password', $password);
-		$query = $this->db->get(self::USERSTABLE);
-		if($query->num_rows() > 0 ){
-			return true;
-
+	
 
 		public function insert($data)
 		{
@@ -103,7 +92,7 @@ public function login($username, $password){
 
 		}
 
+
+
 }
-
-
 ?>

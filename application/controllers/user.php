@@ -127,7 +127,6 @@ class User extends CI_Controller {
     public function main()
     {
         $result['data'] = $this->blog_model->get_blogpost();
-        
         $this->load->view('pages/main', $result);
        
     }
@@ -192,6 +191,21 @@ class User extends CI_Controller {
                 
         }
 
+    }
+    public function adminpage()
+    {   
+         $datablog['datablog'] = $this->blog_model->get_blogpost();
+         $this->load->view('pages/admin',$datablog);
+    }
+    public function updatestatus($id)
+    {
+            $result = $this->blog_model->updateblogstatus($id);
+            if($result){
+                $this->session->set_flashdata('success_msg', 'Blog has been approved');
+            }else{
+                $this->session->set_flashdata('error_msg', 'Failed to approved blog');
+            }
+            redirect(site_url('user/adminpage'));
     }
   
     

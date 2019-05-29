@@ -19,6 +19,25 @@ class Blog_model extends CI_Model{
 			$query = $this->db->query("select * from blogpost");
 			return $query->result();
 		}
-}	
+		public function pendingblogs()
+		{
+			$id = 0;
+			$query = $this->db->get_where(self::BLOGTABLE, array('poststatus' => '0'));
+			return $query->result();
+		}	
+		public function updateblogstatus($id)
+		{
+			$field = array(
+			'poststatus' =>1
+			);
 
+			$this->db->where('id',$id);
+			$this->db->update(self::BLOGTABLE, $field);
+			if($this->db->affected_rows() > 0){
+				return true;
+			}else{
+				return false;
+			}
+		}
 
+}

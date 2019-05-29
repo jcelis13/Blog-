@@ -75,8 +75,8 @@
         
 				<br><br>
 					<center><h2>BLOG</h2></center>
-			<form method="post" action="<?php echo site_url('user/insert_blog');?>" enctype="multipart/form-data">
-					<div class="form-row" style="margin-left: 500px;">
+		<form method="post" action="<?php echo site_url('user/insert_blog');?>" enctype="multipart/form-data">
+			<div class="form-row" style="margin-left: 500px;">
 
 					
 					<div class="form-group col-md-6">

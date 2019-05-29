@@ -21,7 +21,7 @@ class Blog_model extends CI_Model{
 		}
 		public function pendingblogs()
 		{
-			$id = 0;
+		
 			$query = $this->db->get_where(self::BLOGTABLE, array('poststatus' => '0'));
 			return $query->result();
 		}	
@@ -35,6 +35,16 @@ class Blog_model extends CI_Model{
 			$this->db->update(self::BLOGTABLE, $field);
 			if($this->db->affected_rows() > 0){
 				return true;
+			}else{
+				return false;
+			}
+		}
+		public function getblogid($id)
+		{
+			$this->db->where('id', $id);
+			$query = $this->db->get(self::BLOGTABLE);
+			if($query->num_rows() > 0){
+				return $query->row();
 			}else{
 				return false;
 			}

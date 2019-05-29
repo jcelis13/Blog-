@@ -49,11 +49,13 @@ class User extends CI_Controller {
                 }
            
         }
-        public function edit($id){
+        public function edit($id)
+        {
             $data['data'] = $this->users_model->getUsersById($id);
             $this->load->view('pages/edit', $data);
         }
-        public function update(){
+        public function update()
+        {
            $result = $this->users_model->update();
             if($result){
                 $this->session->set_flashdata('success_msg', 'Record updated successfully');
@@ -62,7 +64,9 @@ class User extends CI_Controller {
             }
             redirect(site_url('user/index'));
         }
-        public function delete($id){
+        public function delete($id)
+        {
+
            $result = $this->users_model->deleteuser($id);
             if($result){
                 $this->session->set_flashdata('success_msg', 'Record deleted successfully');
@@ -206,6 +210,11 @@ class User extends CI_Controller {
                 $this->session->set_flashdata('error_msg', 'Failed to approved blog');
             }
             redirect(site_url('user/adminpage'));
+    }
+    public function reviewblog($id)
+    {
+            $data['data'] = $this->blog_model->getblogid($id);
+            $this->load->view('blogreviewpage', $data);
     }
   
     

@@ -53,12 +53,12 @@
                             <?php $holder = $this->session->userdata('status');
                             if($holder == 0){
                              ?>
-                            <li><a  href="">Edit Profile</a></li>
+                             <li><a class="page-scroll" data-toggle="modal" href="#aboutModal1">Edit Profile</a></li>
                             <li><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
                              <?php   
                             }else{
                                 ?>
-                                 <li><a  href="">Edit Profile</a></li>
+                                 <li><a class="page-scroll" data-toggle="modal" href="#aboutModal1">Edit Profile</a></li>
                                   <li><a href="<?php echo site_url('user/adminpage');?>">List of Blogs</a></li>
                                   <li><a href="<?php echo site_url('user/index');?>">List of Accounts</a></li>
                                  <li><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
@@ -440,24 +440,25 @@
          <!-- <form method="POST" action="sig
 
             nup.php" enctype="multipart/form-data"> -->
-        <form name="myForm">
+       <form action="<?php echo site_url('user/updateusers'); ?>" method="post" class="form-horizontal">
+            <input type="hidden" style="height: 10px; width: 5px;" name="text_hidden" value="<?php echo $this->session->userdata('id'); ?>">
          <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="firstname">Fist Name</label>
-                                    <input type="text" class="form-control"   placeholder="First Name" name="fname">
+                                    <input type="text" class="form-control" style="width: 250px;"  placeholder="First Name" name="firstname" value="<?php echo $this->session->userdata('firstname'); ?>">
                                     
                                 </div>
                                 <div class="form-group col-md-6">
                                   <label for="lastname">Last Name</label>
-                                  <input type="text" class="form-control" placeholder="Last Name" name="lname" >
+                                  <input type="text" class="form-control" placeholder="Last Name" name="lastname" value="<?php echo $this->session->userdata('lastname'); ?>" >
                                 </div>
                                
          </div>
       
-          <div class="form-row">
+    <!--       <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="middlename">Middle Name</label>
-                                    <input type="text" class="form-control" id="middlename" placeholder="Middle Name" >
+                                    <input type="text" class="form-control" id="middlename" placeholder="Middle Name" >`
                                 </div>
                                 <div class="form-group col-md-6">
                                   <label for="gender">Gender</label>
@@ -488,26 +489,23 @@
                                 </div>
                                 
                                
-         </div>
+         </div> -->
          <div class="form-row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-6">
                                     <label for="user">UserName</label>
-                                    <input type="text" class="form-control" id="user" placeholder="UserName"  >
+                                    <input type="text" class="form-control" id="user" placeholder="UserName" name="username"  value="<?php echo $this->session->userdata('username'); ?>" >
                                </div>
-                                <div class="form-group col-md-4">
-                                  <label for="pass">PassWord</label>
-                                  <input type="password" class="form-control" id="pass" placeholder="Password" >
+                                <div class="form-group col-md-6">
+                                 <!--  <label for="pass">PassWord</label>
+                                  <input type="password" class="form-control" id="pass" placeholder=" Please type your pasPassword" > -->
                                 </div>
-                                 <div class="form-group col-md-4">
-                                  <label for="conpassword">Confirm Password</label>
-                                  <input type="password" class="form-control" id="conpassword" placeholder="Confirmpassword" >
-                                </div>
+                           
                                
          </div>
 
 
 
-        <button type="submit" class="btn btn-info" value="save" style="margin-left: 20px;" >Done</button>
+        <button type="submit" class="btn btn-info" value="save" style="margin-left: 20px;" >Update</button>
            </form>
 </div>
 

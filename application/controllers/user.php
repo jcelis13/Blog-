@@ -41,11 +41,11 @@ class User extends CI_Controller {
                 else{
                      $result = $this->users_model->submit();
                     if($result){
-                        $this->session->set_flashdata('success_msg', 'Record added successfully');
+                        $this->session->set_flashdata('success_msg', 'Record added successfully, PLEASE LOG IN');
                     }else{                
                         $this->session->set_flashdata('error_msg', 'Failed to add record');
                     }
-                    redirect(site_url('user/index'));
+                    redirect(site_url('user/login'));
                 }
            
         }
@@ -95,12 +95,14 @@ class User extends CI_Controller {
                 if($this->users_model->login($username, $password)){
 
                 $sql = "SELECT * FROM users WHERE username = '".$username."'";
-                $result = $this->db->query($sql);
+                $result = $this->db->query($sql); 
                 $row = $result->row();
                      $sess_data = array(
                         'id' => $row->id,
                         'firstname' => $row->firstname,
                         'lastname' => $row->lastname,
+                        'username' =>$row->username,
+                        'password' =>$row->password,
                         'status' => $row->status
       
                     );
@@ -234,6 +236,25 @@ class User extends CI_Controller {
         unlink($file);
      
          redirect(site_url('user/main'));
+    }
+    public function updateusers()
+    { 
+            $result = $this->users_model->updateuser();
+            $username = $this->input->post('username');
+            $sql = "SELECT * FROM users WHERE username = '".$username."'";
+                $result = $this->db->query($sql); 
+                $row = $result->row();
+                     $sess_data = array(
+                        'id' => $row->id,
+                        'firstname' => $row->firstname,
+                        'lastname' => $row->lastname,
+                        'username' =>$row->username,
+                        'password' =>$row->password,
+                        'status' => $row->status
+      
+                    );
+                    $this->session->set_userdata($sess_data);
+            redirect(site_url('user/main'));
     }
   
     

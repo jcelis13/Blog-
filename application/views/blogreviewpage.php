@@ -27,7 +27,7 @@
 						<label style="margin-right: 410px;">Author</label>
 						<input type="text" class="form-control"name="blogtitle" size="20" value="<?php echo $data->usersname;?>"/>
 						<br>
-						 <img src="<?php echo base_url('uploads/'.$data->picname);?>">
+						 <img style="width: 200px; height: 200px;" src="<?php echo base_url('uploads/'.$data->picname);?>">
 						 <br>
 						<br>
 						<label style="margin-right: 410px;">Title</label>

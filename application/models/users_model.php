@@ -95,8 +95,27 @@ public function login($username, $password)
 		}
 
 }
+public function updateuser()
+{
+	$id = $this->input->post('text_hidden');
+	
+	$field = array(
+		'firstname' =>$this->input->post('firstname'),
+		'lastname' =>$this->input->post('lastname'),
+		'username' =>$this->input->post('username')
+		
+		
+	);
+	$this->db->where('id', $id);
+	
+	$this->db->update(self::USERSTABLE, $field);
+	if($this->db->affected_rows() > 0){
+		return true;
+	}else{
+		return false;
+	}
 
 }
-
+}
 
 ?>

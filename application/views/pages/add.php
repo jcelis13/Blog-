@@ -18,7 +18,7 @@
 	</div>
 	<div class="container">
 		<h3>Add users</h3>
-		<a href="<?php echo site_url('user/index');?>" class="btn btn-primary">Back</a>
+		<a href="<?php echo site_url('user/login');?>" class="btn btn-primary">Back</a>
 		<form action="<?php echo site_url('user/submit'); ?>" method="post" class="form-horizontal">
 			<div class="form-group">
 				<label for="firstname" class="col-md-2 text-right">First Name</label>

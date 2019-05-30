@@ -18,6 +18,7 @@
 	</div>
 	<div class="container">
 		<h3>List of blogs</h3>
+		<a href="<?php echo site_url('user/main');?>" class="btn btn-primary">Back</a>
 
 		<?php
 

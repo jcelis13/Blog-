@@ -86,12 +86,12 @@
 						
 					<?php if($blogdata->poststatus == 1){
 					?>
-					<a href="" class="btn btn-info">View Blog</a>
+					<a href="<?php echo site_url('user/reviewblog/'.$blogdata->id); ?>" class="btn btn-info">View Blog</a>
 					
 					<?php
 					}else{
 					?>
-					<a href="" class="btn btn-info">View Blog</a>
+					<a href="<?php echo site_url('user/reviewblog/'.$blogdata->id); ?>" class="btn btn-info">View Blog</a>
 					<a href="<?php echo site_url('user/updatestatus/'.$blogdata->id); ?>" class="btn btn-primary">Approved Blog</a>
 					<?php	
 					}?>

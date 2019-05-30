@@ -101,7 +101,7 @@ class User extends CI_Controller {
                         'id' => $row->id,
                         'firstname' => $row->firstname,
                         'lastname' => $row->lastname,
-                        'status' => $row->status,
+                        'status' => $row->status
       
                     );
                     $this->session->set_userdata($sess_data);
@@ -130,8 +130,8 @@ class User extends CI_Controller {
     }
     public function main()
     {
-        $result['data'] = $this->blog_model->get_blogpost();
-        $this->load->view('pages/main', $result);
+        $datablog['datablog'] = $this->blog_model->approvedblogs();
+        $this->load->view('pages/main', $datablog);
        
     }
     public function logout()
@@ -168,30 +168,29 @@ class User extends CI_Controller {
             $data['caption'] =  $this->input->post('caption');
             $data['time'] = date("h:i:sa");
             $data['date'] = date("Y-M-d");
-            $data['picname'] = $picname.".jpg";
+            $data['picname'] = $picname.'.jpg';
 
             $this->blog_model->insertblog($data);
-            $result['data'] = $this->blog_model->get_blogpost();
-            $this->load->view('pages/main', $result);
             
+         
             
 
             $config['upload_path'] ='./uploads';
             $config['allowed_types'] ='gif|jpg|png';
-            $config['max_width'] = "1024";
-            $config['max_height'] = "786";
-             $config['file_name'] = $picname.".jpg";
+            // $config['max_width'] = "1024";
+            // $config['max_height'] = "786";
+             $config['file_name'] = $picname.'.jpg';
             $this->load->library('upload', $config);
            if(!$this->upload->do_upload('userFile')){
                 $error  = array('error' =>$this->upload->display_errors());
            } 
            else{
                $data=array('upload_data'=>$this->upload->data());
-               
+                redirect(site_url('user/main'));
            }    
          
 
-          
+            
                 
         }
 
@@ -215,6 +214,26 @@ class User extends CI_Controller {
     {
             $data['data'] = $this->blog_model->getblogid($id);
             $this->load->view('blogreviewpage', $data);
+    }
+    public function editblogs($id)
+    {
+            $data['data'] = $this->blog_model->getblogid($id);
+            $this->load->view('pages/editblog', $data);
+    }
+    public function updateblogs()
+    {
+         $result = $this->blog_model->updateblog();
+         redirect(site_url('user/main'));
+    }
+    public function deleteblogs($id)
+    {
+        $result = $this->blog_model->deleteblog($id);
+      
+        
+        $file = 'uploads/'.$id.'.jpg';
+        unlink($file);
+     
+         redirect(site_url('user/main'));
     }
   
     

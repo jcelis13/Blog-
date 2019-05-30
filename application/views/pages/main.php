@@ -47,18 +47,35 @@
                       <a style="text-decoration: none; cursor: pointer; color: white" class=" dropdown-toggle" type="button" data-toggle="dropdown"><?php if(!empty($this->session->userdata('id'))){
 
                       	echo $this->session->userdata('firstname') ." ".  $this->session->userdata('lastname'); 
+                        ?>
+                           <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                            <?php $holder = $this->session->userdata('status');
+                            if($holder == 0){
+                             ?>
+                            <li><a  href="">Edit Profile</a></li>
+                            <li><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
+                             <?php   
+                            }else{
+                                ?>
+                                 <li><a  href="">Edit Profile</a></li>
+                                  <li><a href="<?php echo site_url('user/adminpage');?>">List of Blogs</a></li>
+                                  <li><a href="<?php echo site_url('user/index');?>">List of Accounts</a></li>
+                                 <li><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
+                                <?php
+                            }
+                            ?>
+                             
+                            
+                            </ul>
+
+                        <?php
                       }
 
                       ?>
 
 
-                            <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                              <li><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
-                              <li><a class="page-scroll" data-toggle="modal" title="A free Bootstrap video landing theme"  href="#Edit">Edit Profile</a></li>
-                            
-                            </ul>
-
+                         
                     </div>
                 	</li>
                 	
@@ -108,8 +125,11 @@
 <center><h1>POST SECTION</h1></center>
     <section class="bg-primary" id="one">
     		
-    <?php 
-                foreach($data as $row){
+    <?php       
+             if($datablog){
+
+
+                foreach($datablog as $row){
             
              
              ?>
@@ -120,11 +140,47 @@
 					    
 					  </div>
 					
-		 	    <?php echo $row->picname; ?>
+		 	 
 					  <div class="col-lg-4">
 					    <div class="thumbnail">
-					    	<p style="color: black">Name: <?php echo $row->usersname;?></p>
-					      <img src="<?php echo base_url('uploads/'.$row->picname);?>">
+                            <div class="row">
+					    	<p class="col-sm-11" style="color: black">Name: <?php echo $row->usersname;?></p>
+                            
+                        <ul class="col-sm-1">
+                        <li>
+                         <div class="dropdown" >
+                          <a style="text-decoration: none; cursor: pointer; color: white" class=" dropdown-toggle" type="button" data-toggle="dropdown">
+
+
+                            <span style="color: black" class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                              <li><a href="<?php echo site_url('user/editblogs/'.$row->id); ?>">Edit</a></li>
+                              <li><a href="<?php echo site_url('user/deleteblogs/'.$row->id);?>"onclick="return confirm('Do you want to delete this record?')">DELETE</a></li>
+                            
+                            </ul>
+
+                            </div>
+                            </li>
+                            
+                        </ul>
+               
+                        
+                            </div>
+                               
+                                     <div class="row no-gutter">
+                                         <a href="#galleryModal" class="gallery-box" data-toggle="modal" data-src="<?php echo base_url('uploads/'.$row->picname);?>">
+                                        <img style="height: 300px;" src="<?php echo base_url('uploads/'.$row->picname);?>" class="img-responsive" alt="Image 1">
+                                        <div class="gallery-box-caption">
+                                            <div class="gallery-box-content">
+                                                <div>
+                                                    <i class="icon-lg ion-ios-search"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </a>
+                                    </div>
+                               
+					      <!-- <img src="<?php echo base_url('uploads/'.$row->picname);?>"> -->
 					      <div class="caption">
 					        <h3>TITLE: <?php echo $row->title;?> </h3>
 					        <p>Caption:  <?php echo $row->caption;?></p>
@@ -141,7 +197,9 @@
 					  </div>
 					 
 			</div>
-		  <?php }?>	
+
+	 <?php }
+                }?>	
    
     </section>
 
@@ -244,7 +302,7 @@
                 <div class="media wow fadeIn">
                     <h3>Free</h3>
                     <div class="media-left">
-                        <a href="#alertModal" data-toggle="modal" data-target="#alertModal"><i class="icon-lg ion-ios-cloud-download-outline"></i></a>
+                      
                     </div>
                     <div class="media-body media-middle">
                         <p>Yes, please. Grab it for yourself, and make something awesome with this.</p>
@@ -286,7 +344,7 @@
 
     </section>
     
-    
+  <!--   
     <footer id="footer">
         <div class="container-fluid">
             <div class="row">
@@ -315,7 +373,7 @@
             <br/>
             <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Landing Zero by BootstrapZero</a> ©2015 Company</span>
         </div>
-    </footer>
+    </footer> -->
     <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
         <div class="modal-content">

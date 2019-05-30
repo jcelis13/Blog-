@@ -44,7 +44,9 @@
 			}
 
 		?>
+		<a href="<?php echo site_url('user/main');?>" class="btn btn-primary">Back</a>
 		<a href="<?php echo site_url('user/insert_users');?>" class="btn btn-primary" >ADD RECORD</a>
+
 		<table class="table table-bordered table-responsive">
 			<thead>
 				<tr>

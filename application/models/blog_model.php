@@ -82,5 +82,14 @@ class Blog_model extends CI_Model{
 				return false;
 			}
 		}
+		public function showAllBlogs()
+		{
+			$query = $this->db->get(self::BLOGTABLE);
+			if($query->num_rows() > 0){
+				return $query->result();
+			}else{
+				return false;
+			}
+		}
 
 }

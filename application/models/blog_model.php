@@ -102,5 +102,44 @@ class Blog_model extends CI_Model{
 	        return $results->result_array();
 
 		}
+		public function editblog()
+		{
+			$id  = $this->input->get('id');
+			$this->db->where('id', $id);
+			$query = $this->db->get(self::BLOGTABLE);
+			if($query->num_rows() > 0){
+				return $query->row();
+			}else{
+				return false;
+			}
+			
+		}
+		public function updateblogs()
+		{
+			$id = $this->input->post('txtid');
+			$field = array(
+				'title'=>$this->input->post('Title'),
+				'caption'=>$this->input->post('Caption'),
+			);
+			$this->db->where('id', $id);
+			$this->db->update(self::BLOGTABLE, $field);
+			if($this->db->affected_rows() > 0){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		public function deleteblogs()
+		{
+			$id = $this->input->get('id');
+			$this->db->where('id', $id);
+			$this->db->delete(self::BLOGTABLE);
+			if($this->db->affected_rows() >0){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
 
 }

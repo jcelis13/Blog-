@@ -33,4 +33,30 @@ class blogs extends CI_Controller{
             ->set_output(json_encode($result));
 		
 	}
+	public function editblog()
+	{
+		$result = $this->blog_model->editblog();
+			$this->output->set_content_type('application/json')
+           	 ->set_output(json_encode($result));
+	}
+	public function updateblogs()
+	{
+		$result = $this->blog_model->updateblogs();
+		$msg['success'] = false;
+		if($result){
+			$msg['success'] = true;
+		}
+		$this->output->set_content_type('application/json')
+           	 ->set_output(json_encode($msg));
+	}
+	public function deleteblogs()
+	{
+		$result = $this->blog_model->deleteblogs();
+		$msg['success'] = false;
+		if($result){
+			$msg['success'] = true;
+		}
+		$this->output->set_content_type('application/json')
+           	 ->set_output(json_encode($msg));
+	}
 }

@@ -85,11 +85,22 @@ class Blog_model extends CI_Model{
 		public function showAllBlogs()
 		{
 			$query = $this->db->get(self::BLOGTABLE);
-			if($query->num_rows() > 0){
-				return $query->result();
-			}else{
-				return false;
-			}
+			return $query->result();	
+		}
+		public function getdata($user_id = 0, $blog_id = 0)
+		{	
+			if ($user_id) {
+	            $this->db->where('usersid', $user_id);
+	        }
+
+	        if ($blog_id) {
+	            $this->db->where('id', $blog_id);
+	        }
+
+	        $results = $this->db->get(self::BLOGTABLE);
+	        
+	        return $results->result_array();
+
 		}
 
 }

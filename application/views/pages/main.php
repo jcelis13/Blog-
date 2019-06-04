@@ -54,11 +54,13 @@
                             if($holder == 0){
                              ?>
                              <li><a class="page-scroll" data-toggle="modal" href="#aboutModal1">Edit Profile</a></li>
+                               <li><a href="<?php echo site_url('ajax/blogs/index/'.$this->session->userdata('id'));?>">List of my Blogs</a></li>
                             <li><a href="<?php echo site_url('user/logout');?>">Logout</a></li>
                              <?php   
                             }else{
                                 ?>
                                  <li><a class="page-scroll" data-toggle="modal" href="#aboutModal1">Edit Profile</a></li>
+                                  <li><a href="<?php echo site_url('ajax/blogs/index');?>">List of my Blogs</a></li>
                                   <li><a href="<?php echo site_url('user/adminpage');?>">List of Blogs</a></li>
                                   <li><a href="<?php echo site_url('user/index');?>">List of Accounts</a></li>
                                  <li><a href="<?php echo site_url('user/logout');?>">Logout</a></li>

@@ -116,6 +116,10 @@ public function updateuser()
 	}
 
 }
+public function blogs($userid)
+{
+	
+}
 }
 
 ?>

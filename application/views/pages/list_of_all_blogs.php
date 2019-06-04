@@ -37,7 +37,7 @@
 			</thead>
 			<tbody id="showdata">
 				
-				<tr>
+				<!-- <tr>
 					<td></td>
 					<td></td>
 					<td></td>
@@ -49,7 +49,7 @@
 					
 						
 					</td>
-				</tr>
+				</tr> -->
 				
 			</tbody>
 			
@@ -62,11 +62,11 @@
 		$(function(){
 
 				showAllBlogs();
+
 				function showAllBlogs(){
 				$.ajax({
 					type: 'GET',
-					url: '<?php echo site_url('ajax/blogs/showAllBlogs');?>',
-					async: false,
+					url: '<?php echo site_url('ajax/blogs/getdata');?>',
 					dataType: 'json',
 					success: function(data){
 						var html = '';
@@ -79,8 +79,8 @@
 										'<td>'+data[i].caption+'</td>'+
 										'<td>'+data[i].status+'</td>'+
 										'<td>'+	
-										'<a href="" class="btn btn-info">View Blog</a>'+
-										'<a href="" class="btn btn-primary">Approved Blog</a>'+
+										'<a href="" class="btn btn-info">EDIT</a>'+
+										'<a href="" class="btn btn-primary">DELETE</a>'+
 										
 											
 										'</td>';	
